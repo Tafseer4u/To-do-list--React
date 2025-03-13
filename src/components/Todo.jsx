@@ -66,12 +66,12 @@ const Todo = () => {
     <>
       <div className="absolute top-0 z-[-2] h-screen w-screen rotate-180 transform bg-[#201f1f]"></div>
 
-      <div className="flex justify-center items-center">
-        <div className="m-10 flex items-center justify-center ">
+      <div className="flex flex-col sm:flex-row justify-center items-center px-4">
+        <div className="m-4 w-full sm:w-auto flex items-center justify-center">
           <input
             onChange={handlechange}
             value={todo}
-            className="w-3xl bg-slate-200 py-3 px-5 shadow border-none focus:outline-none rounded-2xl"
+            className="w-full sm:w-3xl bg-slate-200 py-3 px-5 shadow border-none focus:outline-none rounded-2xl"
             type="text"
             placeholder="Enter your Todo here"
           />
@@ -79,15 +79,15 @@ const Todo = () => {
         <button
           disabled={todo.length <= 2}
           onClick={handleAdd}
-          className="cursor-pointer border-none font-bold h-12 shadow py-3 px-5 bg-[#0ab6ab] rounded-2xl hover:bg-[#08a79c]"
+          className="cursor-pointer border-none font-bold h-12 shadow py-3 px-5 bg-[#0ab6ab] rounded-2xl hover:bg-[#08a79c] w-full sm:w-auto"
         >
           Save
         </button>
       </div>
-      <div className=" flex justify-around text-2xl font-bold text-[#0ab6ab] items-center">
-        Your Todos
-        {/* show taskbar */}
-        <div className="flex text-grey text-sm  items-center gap-2">
+
+      <div className="flex flex-col sm:flex-row justify-around items-center text-2xl font-bold text-[#0ab6ab] px-4">
+        <span>Your Todos</span>
+        <div className="flex text-gray-600 text-sm items-center gap-2">
           <input
             onChange={toggle}
             className="h-4 w-4"
@@ -97,21 +97,22 @@ const Todo = () => {
           Show Finished
         </div>
       </div>
-      <div className="flex flex-row flex-wrap overflow-x-auto justify-center text-white bg-white mx-70 my-3 rounded-2xl px-1 py-2 max-h-[440px]">
+
+      <div className="flex flex-wrap justify-center text-white bg-white mx-auto my-3 rounded-2xl px-3 py-2 max-h-[440px] overflow-y-auto max-w-4xl ">
         {Todos.length === 0 && (
-          <div className="text-gray-600 p-2 mx-2 block">
+          <div className="text-gray-600 p-2 mx-2 text-center">
             No todo's to display
           </div>
         )}
-        {Todos.map((item) => {
-          return (
-            (showtask || item.iscompleted == false) && (
+        {Todos.map(
+          (item) =>
+            (showtask || !item.iscompleted) && (
               <div
                 key={item.id}
-                className="flex w-[900px] text-black items-center bg-slate-200 rounded-2xl border-black mx-2 my-2 p-2"
+                className="flex flex-row  sm:flex-row w-full sm:w-[90%] md:w-[80%] lg:w-[100%] text-black items-center bg-slate-200 rounded-2xl border-black mx-2 my-2 p-2 "
               >
-                {/* checkbox */}
-                <div className="items-center justify-center my-2 mx-6 w-7 ">
+                {/* Checkbox */}
+                <div className="flex items-center justify-center mx-2">
                   <label className="flex items-center space-x-2 cursor-pointer">
                     <input
                       onChange={handlecheck}
@@ -140,24 +141,22 @@ const Todo = () => {
                     </div>
                   </label>
                 </div>
-                {/* my todo */}
+
+                {/* Todo Text */}
                 <div
-                  className={
-                    item.iscompleted
-                      ? " flex items-center text-nowrap overflow-auto w-2/3 px-2 line-through"
-                      : " flex items-center text-nowrap overflow-auto w-2/3 px-2 "
-                  }
+                  className={`flex items-center w-full sm:w-2/3 px-2 overflow-auto ${
+                    item.iscompleted ? "line-through" : ""
+                  }`}
                 >
                   {item.todo}
                 </div>
-                <div className="flex gap-4  ml-30">
-                  {/* edit button */}
-                  <button onClick={(e) => handleEdit(e, item.id)} className="">
+
+                {/* Action Buttons */}
+                <div className="flex gap-4 mt-2 sm:mt-0 sm:ml-auto">
+                  <button onClick={(e) => handleEdit(e, item.id)}>
                     <svg
-                      className="cursor-pointer "
+                      className="cursor-pointer"
                       xmlns="http://www.w3.org/2000/svg"
-                      x="0px"
-                      y="0px"
                       width="25"
                       height="25"
                       viewBox="0 0 30 30"
@@ -166,13 +165,11 @@ const Todo = () => {
                       <path d="M24,11l2.414-2.414c0.781-0.781,0.781-2.047,0-2.828l-2.172-2.172c-0.781-0.781-2.047-0.781-2.828,0L19,6L24,11z M17,8	L5.26,19.74c0,0,0.918-0.082,1.26,0.26c0.342,0.342,0.06,2.58,0.48,3s2.644,0.124,2.963,0.443c0.319,0.319,0.297,1.297,0.297,1.297	L22,13L17,8z M4.328,26.944l-0.015-0.007C4.213,26.97,4.111,27,4,27c-0.552,0-1-0.448-1-1c0-0.111,0.03-0.213,0.063-0.313	l-0.007-0.015L4,23l1.5,1.5L7,26L4.328,26.944z"></path>
                     </svg>
                   </button>
-                  {/* delete btn */}
+
                   <button onClick={(e) => handleDelete(e, item.id)}>
                     <svg
                       className="cursor-pointer"
                       xmlns="http://www.w3.org/2000/svg"
-                      x="0px"
-                      y="0px"
                       width="25"
                       height="25"
                       viewBox="0 0 30 30"
@@ -184,8 +181,7 @@ const Todo = () => {
                 </div>
               </div>
             )
-          );
-        })}
+        )}
       </div>
     </>
   );
