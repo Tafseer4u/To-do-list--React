@@ -85,7 +85,7 @@ const Todo = () => {
         </button>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-around items-center text-2xl font-bold text-[#0ab6ab] px-4">
+      <div className="flex flex-row md:justify-around sm:flex-row justify-between items-center text-2xl font-bold text-[#0ab6ab] px-4">
         <span>Your Todos</span>
         <div className="flex text-gray-600 text-sm items-center gap-2">
           <input
